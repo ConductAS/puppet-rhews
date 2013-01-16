@@ -1,16 +1,14 @@
-define rhews::service (
-  $service_name
-  ) {
+define rhews::service {
 
   service {
-    "tomcat-${service_name}":
+    "tomcat-${name}":
       ensure => running,
       hasstatus => true,
       hasrestart => true,
-      start => "service tomcat-${service_name} start",
-      stop => "service tomcat-${service_name} stop",
-      status => "service tomcat-${service_name} status",
-      restart => "service tomcat-${service_name} restart",
+      start => "service tomcat-${name} start",
+      stop => "service tomcat-${name} stop",
+      status => "service tomcat-${name} status",
+      restart => "service tomcat-${name} restart",
       require => Class['rhews::instance'],
       subscribe => Class['rhews::instance']
   }

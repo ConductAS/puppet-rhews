@@ -1,12 +1,11 @@
 define rhews::instance (
-  $service_name,
   $service_user,
   $connector_port,
   $java_home,
   $java_opts
   ) {
 
-  file { "/etc/sysconfig/tomcat-${service_name}":
+  file { "/etc/sysconfig/tomcat-${name}":
     ensure => file,
     content => template('sysconfig.erb'),
     owner => 'root',
@@ -22,7 +21,7 @@ define rhews::instance (
     group => 'root'
   }
 
-  file { "/etc/tomcat-${service_name}":
+  file { "/etc/tomcat-${name}":
     ensure => directory,
     source => 'puppet:///${module_name}/tomcat7_conf',
     recurse => true,
@@ -32,84 +31,84 @@ define rhews::instance (
     mode => '0750'
   }
 
-  file { "/var/lib/tomcat-${service_name}":
+  file { "/var/lib/tomcat-${name}":
     ensure => directory,
     owner => "${service_user}",
     group => 'tomcat',
     mode => '2750'
   }
 
-  file { "/var/lib/tomcat-${service_name}/webapps":
+  file { "/var/lib/tomcat-${name}/webapps":
     ensure => directory,
     owner => "${service_user}",
     group => 'tomcat',
     mode => '2750'
   }
 
-  file { "/usr/share/tomcat-${service_name}/webapps":
+  file { "/usr/share/tomcat-${name}/webapps":
     ensure => link,
-    target => "/var/lib/tomcat-${service_name}/webapps",
+    target => "/var/lib/tomcat-${name}/webapps",
     owner => 'root',
     group => 'root'
   }
 
-  file { "/var/log/tomcat-${service_name}":
+  file { "/var/log/tomcat-${name}":
     ensure => directory,
     owner => "${service_user}",
     group => "${service_user}",
     mode => '0750'
   }
 
-  file { "/usr/share/tomcat-${service_name}/logs":
+  file { "/usr/share/tomcat-${name}/logs":
     ensure => link,
-    target => "/var/log/tomcat-${service_name}",
+    target => "/var/log/tomcat-${name}",
     owner => 'root',
     group => 'root'
   }
 
-  file { "/usr/share/tomcat-${service_name}/bin":
+  file { "/usr/share/tomcat-${name}/bin":
     ensure => link,
     target => "/usr/share/tomcat7/bin",
     owner => 'root',
     group => 'root'
   }
 
-  file { "/usr/share/tomcat-${service_name}/lib":
+  file { "/usr/share/tomcat-${name}/lib":
     ensure => link,
     target => "/usr/share/java/tomcat7",
     owner => 'root',
     group => 'root'
   }
 
-  file { "/usr/share/tomcat-${service_name}/webapps":
+  file { "/usr/share/tomcat-${name}/webapps":
     ensure => link,
     target => "/usr/share/tomcat7",
     owner => 'root',
     group => 'root'
   }
 
-  file { "/var/cache/tomcat-${service_name}/work":
+  file { "/var/cache/tomcat-${name}/work":
     ensure => directory,
     owner => "${service_user}",
     group => 'tomcat',
     mode => '0750'
   }
 
-  file { "/usr/share/tomcat-${service_name}/work":
+  file { "/usr/share/tomcat-${name}/work":
     ensure => link,
     target => "/var/cache/tomcat-${service-name}/work",
     owner => 'root',
     group => 'root'
   }
 
-  file { "/var/cache/tomcat-${service_name}/temp":
+  file { "/var/cache/tomcat-${name}/temp":
     ensure => directory,
     owner => "${service_user}",
     group => 'tomcat',
     mode => '0750'
   }
 
-  file { "/usr/share/tomcat-${service_name}/temp":
+  file { "/usr/share/tomcat-${name}/temp":
     ensure => link,
     target => "/var/cache/tomcat-${service-name}/temp",
     owner => 'root',

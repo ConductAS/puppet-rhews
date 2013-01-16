@@ -19,7 +19,7 @@
 
 class rhews {
   
-  include rhews::packages
+  include rhews::packages, rhews::instance, rhews::service
 
   Class['rhews'] -> Class['rhews::packages']
 }
