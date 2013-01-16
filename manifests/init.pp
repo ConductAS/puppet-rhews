@@ -1,9 +1,9 @@
-# == Class: rhews
+# == Class: puppet-rhews
 #
 #
 # === Parameters
 #
-# None, parameters are given to defined instances. See rhews::instance.
+# None, parameters are given to defined instances. See puppet-rhews::instance.
 #
 # === Examples
 #
@@ -17,9 +17,9 @@
 # Copyright 2013 Conduct AS, unless otherwise noted.
 #
 
-class rhews {
+class puppet-rhews {
   
-  include rhews::packages, rhews::instance, rhews::service
+  include puppet-rhews::packages, puppet-rhews::instance, puppet-rhews::service
 
-  Class['rhews'] -> Class['rhews::packages']
+  Class['puppet-rhews'] -> Class['puppet-rhews::packages']
 }

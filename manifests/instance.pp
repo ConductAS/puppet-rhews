@@ -1,4 +1,4 @@
-define rhews::instance (
+define puppet-rhews::instance (
   $service_user,
   $connector_port,
   $java_home,
@@ -11,7 +11,7 @@ define rhews::instance (
     owner => 'root',
     group => 'root',
     mode => '0644',
-    require => Class['rhews::install']
+    require => Class['puppet-rhews::install']
   }
 
   file { "/etc/init.d/tomcat-$service_name":

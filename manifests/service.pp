@@ -1,4 +1,4 @@
-define rhews::service {
+define puppet-rhews::service {
 
   service {
     "tomcat-${name}":
@@ -9,7 +9,7 @@ define rhews::service {
       stop => "service tomcat-${name} stop",
       status => "service tomcat-${name} status",
       restart => "service tomcat-${name} restart",
-      require => Class['rhews::instance'],
-      subscribe => Class['rhews::instance']
+      require => Class['puppet-rhews::instance'],
+      subscribe => Class['puppet-rhews::instance']
   }
 }
