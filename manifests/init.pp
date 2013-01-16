@@ -19,7 +19,7 @@
 
 class puppet-rhews {
   
-  include puppet-rhews::packages, puppet-rhews::instance, puppet-rhews::service
+  include puppet-rhews::packages
 
   Class['puppet-rhews'] -> Class['puppet-rhews::packages']
 }
