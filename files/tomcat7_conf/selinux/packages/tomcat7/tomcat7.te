@@ -1,0 +1,114 @@
+policy_module(tomcat7, 1.0.0)
+
+########################################
+#
+# Declarations
+#
+
+attribute tomcat7_domain;
+
+tomcat7_domain_template(tomcat7)
+
+type tomcat7_cache_t;
+files_type(tomcat7_cache_t)
+
+type tomcat7_log_t;
+logging_log_file(tomcat7_log_t)
+
+type tomcat7_var_lib_t;
+files_type(tomcat7_var_lib_t)
+
+type tomcat7_var_run_t;
+files_pid_file(tomcat7_var_run_t)
+
+type tomcat7_tmp_t;
+files_tmp_file(tomcat7_tmp_t)
+
+# dknox ews does not use a systemd file
+#type tomcat7_unit_file_t;
+#systemd_unit_file(tomcat7_unit_file_t)
+
+#######################################
+#
+# tomcat7 local policy
+#
+
+optional_policy(`
+	unconfined_domain(tomcat7_t)
+')
+
+########################################
+#
+# tomcat domain local policy
+#
+
+allow tomcat7_t self:process execmem;
+allow tomcat7_t self:process { signal signull };
+
+allow tomcat7_t self:tcp_socket { accept listen };
+allow tomcat7_domain self:fifo_file rw_fifo_file_perms;
+allow tomcat7_domain self:unix_stream_socket create_stream_socket_perms;
+
+manage_dirs_pattern(tomcat7_domain, tomcat7_cache_t, tomcat7_cache_t)
+manage_files_pattern(tomcat7_domain, tomcat7_cache_t, tomcat7_cache_t)
+manage_lnk_files_pattern(tomcat7_domain, tomcat7_cache_t, tomcat7_cache_t)
+files_var_filetrans(tomcat7_domain, tomcat7_cache_t, { dir file })
+
+manage_dirs_pattern(tomcat7_domain, tomcat7_log_t, tomcat7_log_t)
+manage_files_pattern(tomcat7_domain, tomcat7_log_t, tomcat7_log_t)
+logging_log_filetrans(tomcat7_domain, tomcat7_log_t, { dir file })
+
+manage_dirs_pattern(tomcat7_domain, tomcat7_var_lib_t, tomcat7_var_lib_t)
+manage_files_pattern(tomcat7_domain, tomcat7_var_lib_t, tomcat7_var_lib_t)
+files_var_lib_filetrans(tomcat7_domain, tomcat7_var_lib_t, { dir file })
+
+manage_dirs_pattern(tomcat7_domain, tomcat7_var_run_t, tomcat7_var_run_t)
+manage_files_pattern(tomcat7_domain, tomcat7_var_run_t, tomcat7_var_run_t)
+files_pid_filetrans(tomcat7_domain, tomcat7_var_run_t, { dir file })
+
+manage_dirs_pattern(tomcat7_t, tomcat7_tmp_t, tomcat7_tmp_t)
+manage_files_pattern(tomcat7_t, tomcat7_tmp_t, tomcat7_tmp_t)
+manage_fifo_files_pattern(tomcat7_t, tomcat7_tmp_t, tomcat7_tmp_t)
+files_tmp_filetrans(tomcat7_t, tomcat7_tmp_t, { file fifo_file dir })
+
+# we want to stay in a new tomcat domain if we call tomcat binary from a script
+# initrc_t@tomcat7_test_exec_t->tomcat7_test_t@tomcat7_exec_t->tomcat7_test_t
+can_exec(tomcat7_domain, tomcat7_exec_t)
+
+kernel_read_system_state(tomcat7_domain)
+kernel_read_network_state(tomcat7_domain)
+
+corecmd_exec_bin(tomcat7_domain)
+corecmd_exec_shell(tomcat7_domain)
+
+corenet_tcp_bind_generic_node(tomcat7_domain)
+corenet_udp_bind_generic_node(tomcat7_domain)
+corenet_tcp_bind_http_port(tomcat7_domain)
+corenet_tcp_bind_http_cache_port(tomcat7_domain)
+#dknox - undefined
+#corenet_tcp_bind_mxi_port(tomcat7_domain)
+corenet_tcp_connect_http_port(tomcat7_domain)
+#dknox - undefined
+#corenet_tcp_connect_mxi_port(tomcat7_domain)
+
+dev_read_rand(tomcat7_domain)
+dev_read_urand(tomcat7_domain)
+dev_read_sysfs(tomcat7_domain)
+
+domain_use_interactive_fds(tomcat7_domain)
+
+fs_getattr_all_fs(tomcat7_domain)
+
+#dknox
+#fs_read_hugetlbfs_files(tomcat7_domain)
+
+files_read_etc_files(tomcat7_domain)
+files_read_usr_files(tomcat7_domain)
+
+#dknox
+#auth_read_passwd(tomcat7_domain)
+
+miscfiles_read_localization(tomcat7_domain)
+
+sysnet_dns_name_resolve(tomcat7_domain)
+
