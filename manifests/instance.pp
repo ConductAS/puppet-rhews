@@ -7,7 +7,7 @@ define puppet-rhews::instance (
 
   file { "/etc/sysconfig/tomcat-${name}":
     ensure => file,
-    content => template('sysconfig.erb'),
+    content => template("${module_name}/sysconfig.erb"),
     owner => 'root',
     group => 'root',
     mode => '0644',
