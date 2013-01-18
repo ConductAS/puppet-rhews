@@ -15,19 +15,19 @@
 #
 
 # Where your java installation lives
-JAVA_HOME=<%= java_home %>
+JAVA_HOME="<%= java_home %>"
 
 # Where your tomcat installation lives
-CATALINA_BASE="/usr/share/tomcat-<%= service_name %>"
-CATALINA_HOME="/usr/share/tomcat-<%= service_name %>"
-JASPER_HOME="/usr/share/tomcat-<%= service_name %>"
-CATALINA_TMPDIR="/var/cache/tomcat-<%= service_name %>/temp"
+CATALINA_BASE="/usr/share/<%= name %>"
+CATALINA_HOME="/usr/share/<%= name %>"
+JASPER_HOME="/usr/share/<%= name %>"
+CATALINA_TMPDIR="/var/cache/<%= name %>/temp"
 
 # You can pass some parameters to java here if you wish to
 JAVA_OPTS="<%= java_opts %>"
 
 # What user should run tomcat
-TOMCAT_USER="<%= service_uid %>"
+TOMCAT_USER="<%= service_user %>"
 
 # You can change your tomcat locale here
 #LANG="en_US"
@@ -42,7 +42,7 @@ SHUTDOWN_WAIT="120"
 #SHUTDOWN_VERBOSE="false"
 
 # Set the TOMCAT_PID location
-CATALINA_PID="/var/run/tomcat-<%= service_name %>.pid"
+CATALINA_PID="/var/run/<%= name %>.pid"
 
 # Connector port is 8080 for this tomcat6 instance
 CONNECTOR_PORT="<%= connector_port %>"

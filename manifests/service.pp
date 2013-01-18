@@ -1,15 +1,16 @@
 define puppet-rhews::service {
 
+  Puppet-rhews::Instance["${name}"] -> Puppet-rhews::Service["${name}"]
+
   service {
-    "tomcat-${name}":
+    "${name}":
       ensure => running,
       hasstatus => true,
       hasrestart => true,
-      start => "service tomcat-${name} start",
-      stop => "service tomcat-${name} stop",
-      status => "service tomcat-${name} status",
-      restart => "service tomcat-${name} restart",
-      require => Class['puppet-rhews::instance'],
-      subscribe => Class['puppet-rhews::instance']
+      start => "service ${name} start",
+      stop => "service ${name} stop",
+      status => "service ${name} status",
+      restart => "service ${name} restart",
+      subscribe => Puppet-rhews::Instance["${name}"]
   }
 }
