@@ -1,6 +1,6 @@
-define puppet-rhews::service {
+define rhews::service {
 
-  Puppet-rhews::Instance["${name}"] -> Puppet-rhews::Service["${name}"]
+  Rhews::Instance["${name}"] -> Rhews::Service["${name}"]
 
   service {
     "${name}":
@@ -11,6 +11,6 @@ define puppet-rhews::service {
       stop => "service ${name} stop",
       status => "service ${name} status",
       restart => "service ${name} restart",
-      subscribe => Puppet-rhews::Instance["${name}"]
+      subscribe => Rhews::Instance["${name}"]
   }
 }

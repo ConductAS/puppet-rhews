@@ -1,4 +1,4 @@
-class puppet-rhews::packages {
+class rhews::packages {
 
   package { 'tomcat7':
     ensure => installed,

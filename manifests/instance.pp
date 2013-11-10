@@ -1,13 +1,13 @@
-define puppet-rhews::instance (
+define rhews::instance (
   $service_user,
   $connector_port,
   $java_home,
   $java_opts
   ) {
 
-  include puppet-rhews::packages
+  include rhews::packages
 
-  Class['puppet-rhews'] -> Class['puppet-rhews::packages']
+  Class['rhews'] -> Class['rhews::packages']
 
   file { "/etc/sysconfig/${name}":
     ensure => file,
@@ -15,7 +15,7 @@ define puppet-rhews::instance (
     owner => 'root',
     group => 'root',
     mode => '0644',
-    notify => Puppet-rhews::Service["${name}"]
+    notify => Rhews::Service["${name}"]
   }
 
   file { "/etc/init.d/${name}":
@@ -31,7 +31,7 @@ define puppet-rhews::instance (
                 "puppet:///${module_name}/tomcat7_conf" ],
     sourceselect => all,
     recurse => true,
-    replace => true,
+    replace => false,
     owner => 'root',
     group => 'tomcat',
     mode => '0750'
