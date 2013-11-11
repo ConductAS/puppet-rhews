@@ -27,8 +27,8 @@ define rhews::instance (
 
   file { "/etc/${name}":
     ensure => directory,
-    source => [ "puppet:///${name}/conf",
-                "puppet:///${module_name}/tomcat7_conf" ],
+    source => [ "puppet:///modules/${name}/conf",
+                "puppet:///modules/${module_name}/tomcat7_conf" ],
     sourceselect => all,
     recurse => true,
     replace => false,
