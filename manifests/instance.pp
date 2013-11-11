@@ -1,6 +1,9 @@
 define rhews::instance (
   $service_user,
   $connector_port,
+  $connector_port_ssl,
+  $ssl_certificate_file,
+  $ssl_key_file,
   $java_home,
   $java_opts
   ) {
@@ -35,6 +38,16 @@ define rhews::instance (
     owner => 'root',
     group => 'tomcat',
     mode => '0750'
+  }
+
+  file { "/etc/${name}/server.xml":
+    ensure => file,
+    owner => 'root',
+    group => 'tomcat',
+    mode => '0750',
+    replace => true,
+    content => template("${module_name}/server.xml.erb"),
+    require => File["/etc/${name}"]
   }
 
   file { "/var/lib/${name}":
