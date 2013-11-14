@@ -68,6 +68,7 @@
                maxThreads="150" scheme="https" secure="true"
                clientAuth="false" sslProtocol="TLS"
                SSLCertificateFile="<%= ssl_certificate_file %>"
+               SSLCertificateChainFile="<%= ssl_chain_file %>"
                SSLCertificateKeyFile="<%= ssl_key_file %>" />
 
     <Connector port="9009" protocol="AJP/1.3" redirectPort="<%= connector_port_ssl %>" />

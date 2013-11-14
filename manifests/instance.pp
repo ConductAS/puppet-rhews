@@ -3,6 +3,7 @@ define rhews::instance (
   $connector_port,
   $connector_port_ssl,
   $ssl_certificate_file,
+  $ssl_chain_file,
   $ssl_key_file,
   $java_home,
   $java_opts
