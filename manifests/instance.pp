@@ -5,6 +5,7 @@ define rhews::instance (
   $ssl_certificate_file,
   $ssl_chain_file,
   $ssl_key_file,
+  $max_http_header_size = '8192',
   $java_home,
   $java_opts
   ) {
